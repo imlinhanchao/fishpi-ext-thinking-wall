@@ -1,18 +1,19 @@
 <template>
-  <div class="layout">
-    <ul>
+  <div v-if="wall" class="layout">
+    <span>摸魚派倡導自由、友善的交流環境。<br>這裏收留了因不遵守摸魚法則而受到處罰的魚油。</span>
+    <ul v-if="wall.length">
       <li v-for="w in wall" :key="w.userName">
         <section v-if="w.time - now > 0" class="thinking">
           <section class="user-info">
             <span class="avatar"><img :src="w.userAvatarURL" alt=""></span>
             <span class="flex flex-col">
               <span class="username">{{ w.userNickname || w.userName }}</span>
-              <a class="link-btn" href="javascript:void(0)" @click="askGive(w)">为他求情</a>
+              <a class="link-btn" href="javascript:void(0)" @click="askGive(w)">為他求情</a>
             </span>
           </section>
           <section class="count-timer">
             <p>
-              剩余
+              剩餘
             </p>
             <span class="count-timer-val">
               {{ getTimeLeft(w.time - now) }}
@@ -21,6 +22,9 @@
         </section>
       </li>
     </ul>
+    <div v-else style="color: rgb(60, 175, 54); font-weight: bold;">
+      目前沒有受到處罰的魚油，請繼續保持！
+    </div>
   </div>
 </template>
 
@@ -32,7 +36,7 @@ export default {
   },
   data() {
     return {
-      wall: [],
+      wall: null,
       now: new Date().getTime()
     }
   },
@@ -42,6 +46,7 @@ export default {
     setInterval(() => {
       this.now = new Date().getTime();
     }, 1000)
+    this.getThinkingWall();
     this.loop();
   },
   methods: {
@@ -90,6 +95,7 @@ export default {
 
 <style lang="less" scoped>
 .layout {
+  text-align: center;
   ul {
     padding: 0;
     list-style: none;
