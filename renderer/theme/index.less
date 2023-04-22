@@ -1,0 +1,75 @@
+@import "../fonts/less/font-awesome.less";
+
+html {
+    height: 100%;
+    background-size: cover;
+    background: url(../assets/bg.jpg) center center no-repeat;
+}
+body {
+    color: var(--global-text-color);
+    margin: 0;
+    padding: 1px;
+    height: 100%;
+    background-color: rgba(12, 13, 14, .5);
+    font: 1em/1.8 PingFang SC, Lantinghei SC, Segoe UI, Microsoft Yahei,Roboto, Helvetica Neue,Helvetica,Arial,sans-serif;
+    * {
+        box-sizing: border-box;
+    }
+}
+
+a {
+    color: inherit;
+    border-bottom: 1px dashed var(--main-chatroom-message-color);
+    text-decoration: none;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .form-item {
+        display: flex;
+        justify-content: center;
+        box-shadow: 0px 0px 8px var(--global-control-focus-color);
+        .form-icon {
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            vertical-align: middle;
+            color: #FFF;
+            background-color: var(--global-background-color);
+            text-align: center;
+        }
+        .form-input {
+            padding: 5px;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid var(--global-background-color);
+            &:focus {
+                outline: 0;
+            }
+        }
+        .form-button {
+            border: none;
+            color: #FFF;
+            background-color: var(--global-background-color);
+        }
+        .form-submit-append {
+            width: 30px;
+        }
+    }
+}
+.flex {
+    display: flex;
+}
+.flex-col {
+    flex-direction: column;
+}
+p {
+    margin: 0;
+}
+
+.custom-message-container {
+    width: auto!important;
+}
