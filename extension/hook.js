@@ -27,6 +27,10 @@ function ifMenu(theif, menu) {
   return [];
 }
 
+function isInWall(user) {
+  wall.some(w => w.userName == user)
+}
+
 function getMenu(ev, component) {
   let userElement = ev.target.closest('.user-card');
   if (!userElement) return isAdmin() ? [{
@@ -37,19 +41,19 @@ function getMenu(ev, component) {
   }]: [];
   let whiteList = ["adlered","csfwff","gooohlan","iwpz","wuang","Yui","imlinhanchao","admin","9116", "xiaoIce", "摸鱼派官方巡逻机器人", "sevenSummer","chatgpt"]
   return [
-    ...ifMenu(isWhiteList(userElement.dataset.user), [{
+    ...ifMenu(!isWhiteList(userElement.dataset.user), [{
       label: `合议禅定 ${userElement.dataset.user}`,
       click: () => {
         $vue.$fishpi.chatroom.send(`合议禅定 ${userElement.dataset.user} `);
       }
     }]),
-    ...ifMenu(wall.some(w => w.userName == userElement.dataset.user), [{
+    ...ifMenu(isInWall(userElement.dataset.user), [{
       label: `为他求情`,
       click: () => {
         $vue.$fishpi.chatroom.send(`合议破解 ${userElement.dataset.user} `);
       }
     }]),
-    ...ifMenu(isAdmin() && !isInChatRoom(component), [{
+    ...ifMenu(isAdmin() && !isInChatRoom(component) && isInWall(userElement.dataset.user), [{
       label: `解除禁言`,
       click: () => {
         $vue.$fishpi.chatroom.send(`zf jy ${userElement.dataset.user} 0`);
@@ -65,12 +69,14 @@ function getMenu(ev, component) {
       click: () => {
         component.instance.$emit('msg', `zf fk ${userElement.dataset.user} `);
       }
-    }, {
-      label: `解除禁言`,
-      click: () => {
-        $vue.$fishpi.chatroom.send(`zf jy ${userElement.dataset.user} 0`);
-      }
-    }])
+    }, 
+      ...ifMenu(isInWall(userElement.dataset.user), [{
+        label: `解除禁言`,
+        click: () => {
+          $vue.$fishpi.chatroom.send(`zf jy ${userElement.dataset.user} 0`);
+        }
+      }]),
+    ]),
   ]
 }
 
