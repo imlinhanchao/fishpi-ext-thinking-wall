@@ -28,7 +28,7 @@ function ifMenu(theif, menu) {
 }
 
 function isInWall(user) {
-  wall.some(w => w.userName == user)
+  return wall.some(w => w.userName == user)
 }
 
 function getMenu(ev, component) {
